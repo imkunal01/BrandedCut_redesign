@@ -1,0 +1,172 @@
+/* ==============================
+   TEAM — Cyber-Brutalism
+   ============================== */
+.team-section {
+  position: relative;
+  background: var(--deep);
+  padding: 140px 0;
+  overflow: hidden;
+}
+
+.team-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.team-header { margin-bottom: 80px; }
+
+.team-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 16px 0;
+}
+
+.team-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+}
+
+/* Grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Card */
+.team-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  overflow: hidden;
+  transition: border-color 0.4s ease;
+  cursor: default;
+}
+
+.team-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Avatar */
+.team-card-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.team-card-avatar {
+  width: 72px;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent, var(--electric));
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+.team-card-ring {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  border: 2px solid var(--electric);
+  pointer-events: none;
+}
+
+/* Info */
+.team-card-info { flex: 1; }
+
+.team-card-role-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 14px;
+  opacity: 0.8;
+}
+
+.team-card-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.team-card-bio {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Social */
+.team-card-social {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.team-social-btn {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+.team-social-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+/* Glow */
+.team-card-glow {
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  filter: blur(50px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.team-card:hover .team-card-glow { opacity: 0.15; }
+
+@media (max-width: 1200px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .team-section { padding: 100px 0; }
+  .team-container { padding: 0 20px; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-card { padding: 28px 24px; }
+}

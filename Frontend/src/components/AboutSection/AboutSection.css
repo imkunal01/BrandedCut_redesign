@@ -1,0 +1,204 @@
+/* ==============================
+   ABOUT — Cyber-Brutalism
+   ============================== */
+.about-section {
+  position: relative;
+  background: var(--midnight);
+  padding: 140px 0;
+  overflow: hidden;
+}
+
+.about-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.about-header { margin-bottom: 80px; }
+
+.about-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-top: 16px;
+}
+
+/* Story Row */
+.about-story-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 120px;
+  padding-bottom: 120px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.about-story-lead {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.about-story-body {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+/* Decorative Grid Art */
+.about-decorative {
+  position: relative;
+}
+
+.about-grid-art {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  aspect-ratio: 1;
+}
+
+.grid-art-cell {
+  background: rgba(0, 245, 212, 0.15);
+  border: 1px solid rgba(0, 245, 212, 0.1);
+  aspect-ratio: 1;
+  transition: opacity 0.4s ease;
+}
+
+.grid-art-cell:nth-child(3n) { background: rgba(192, 132, 252, 0.15); border-color: rgba(192, 132, 252, 0.1); }
+.grid-art-cell:nth-child(5n) { background: rgba(255, 255, 255, 0.04); }
+
+.about-tagline-block {
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.about-tagline {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--white);
+}
+
+.about-tagline-sub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--electric);
+}
+
+/* Stats Bar */
+.about-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 120px;
+}
+
+.stat-item {
+  padding: 50px 40px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.01);
+  transition: background 0.4s ease;
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-item:hover { background: rgba(0, 245, 212, 0.04); }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--electric);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Values Grid */
+.about-values-header { margin-bottom: 40px; }
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.value-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 48px;
+  overflow: hidden;
+  transition: border-color 0.4s ease;
+}
+
+.value-icon {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.value-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.value-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.value-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  filter: blur(60px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.value-card:hover .value-glow { opacity: 0.2; }
+
+@media (max-width: 1024px) {
+  .about-story-row { grid-template-columns: 1fr; }
+  .about-stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+}
+
+@media (max-width: 768px) {
+  .about-section { padding: 100px 0; }
+  .about-container { padding: 0 20px; }
+  .about-values-grid { grid-template-columns: 1fr; }
+  .about-stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 30px 20px; }
+  .value-card { padding: 32px; }
+}
