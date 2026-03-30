@@ -4,7 +4,7 @@ import AdminLogin from './admin/AdminLogin';
 import AdminForms from './admin/AdminForms';
 import { ThemeProvider } from './contexts/ThemeContext';
 import CardNav from './components/CardNav';
-import logo from './assets/logo3.png';
+import logo from './assets/logo4.png';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
 import PortfolioSection from './components/PortfolioSection';
