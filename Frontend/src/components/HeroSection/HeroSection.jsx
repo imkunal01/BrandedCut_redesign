@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import InfiniteMenu from '../InfiniteMenu/InfiniteMenu';
 import SoftAurora from '../SoftAurora/SoftAurora';
 import './HeroSection.css';
-import showcaseImageMain from '../../assets/3Uiplaceholder.png';
+import showcaseImageMain from '../../assets/2Uiplaceholder.png';
 
 /* ── Bento micro-animation visuals ─────────────────────────── */
 const VideoCard = () => (

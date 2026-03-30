@@ -204,25 +204,20 @@
   border-radius: 0px;
   /* Brutalist sharp edges */
   overflow: hidden;
-  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
   position: relative;
-  background: var(--surface);
+  background: transparent;
   aspect-ratio: 16/9;
 }
+
 
 .showcase-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: contrast(1.1) saturate(1.2);
+  object-fit: contain;
 }
 
 .showcase-overlay-cyber {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, var(--midnight) 0%, transparent 40%);
-  pointer-events: none;
+  display: none;
 }
 
 /* =========================================
@@ -356,7 +351,7 @@
   padding: 3px 9px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   border-radius: 4px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -374,12 +369,19 @@
   letter-spacing: 0.05em;
   transition: color 0.25s ease;
 }
-.bento-see-more:hover { color: var(--electric); }
+
+.bento-see-more:hover {
+  color: var(--electric);
+}
+
 .bento-see-more-arrow {
   display: inline-block;
   transition: transform 0.25s ease;
 }
-.bento-see-more:hover .bento-see-more-arrow { transform: translate(2px, -2px); }
+
+.bento-see-more:hover .bento-see-more-arrow {
+  transform: translate(2px, -2px);
+}
 
 /* Corner accent glow per card */
 .bento-glow {
@@ -395,10 +397,22 @@
   pointer-events: none;
   z-index: 0;
 }
-.bento-video   .bento-glow { background: #00f5d4; }
-.bento-web     .bento-glow { background: #6366f1; }
-.bento-design  .bento-glow { background: #c084fc; }
-.bento-card:hover .bento-glow { opacity: 0.18; }
+
+.bento-video .bento-glow {
+  background: #00f5d4;
+}
+
+.bento-web .bento-glow {
+  background: #6366f1;
+}
+
+.bento-design .bento-glow {
+  background: #c084fc;
+}
+
+.bento-card:hover .bento-glow {
+  opacity: 0.18;
+}
 
 /* Hover border sweep */
 .bento-border-sweep {
@@ -411,39 +425,101 @@
   opacity: 0;
   transition: opacity 0.35s ease;
 }
-.bento-card:hover .bento-border-sweep { opacity: 1; }
+
+.bento-card:hover .bento-border-sweep {
+  opacity: 1;
+}
 
 /* Bottom extra cards (rows 2) — web & design bottom halves */
-.bento-web-b, .bento-design-b {
+.bento-web-b,
+.bento-design-b {
   grid-row: 2;
   background: rgba(12, 13, 22, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 16px;
   overflow: hidden;
 }
-.bento-web-b   { grid-column: 2; }
-.bento-design-b { grid-column: 3; }
 
-/* Responsive */
+.bento-web-b {
+  grid-column: 2;
+}
+
+.bento-design-b {
+  grid-column: 3;
+}
+
 @media (max-width: 1024px) {
   .bento-grid {
     grid-template-columns: 1fr 1fr;
+    display: grid;
+    gap: 16px;
   }
-  .bento-video  { grid-column: 1 / 3; grid-row: auto; }
-  .bento-web    { grid-column: 1;     grid-row: auto; }
-  .bento-design { grid-column: 2;     grid-row: auto; }
+
+  .bento-video {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  .bento-web {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .bento-design {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .bento-featured {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .bento-branding {
+    grid-column: 2;
+    grid-row: 3;
+  }
 }
 
 @media (max-width: 768px) {
-  .agency-container { padding: 0 20px; }
+  .hero-fullscreen {
+    min-height: auto;
+    height: auto;
+    padding: 120px 0 80px;
+  }
+
+  .showcase-wrapper {
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .showcase-inner {
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+  }
+
+  .agency-container {
+    padding: 0 20px;
+  }
+
   .bento-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-  .bento-video, .bento-web, .bento-design {
-    grid-column: 1;
-    grid-row: auto;
+
+  .bento-video,
+  .bento-web,
+  .bento-design,
+  .bento-featured,
+  .bento-branding {
+    width: 100%;
+    margin-bottom: 0;
   }
-  .bento-visual-section { min-height: 130px; }
+
+  .bento-visual-section {
+    min-height: 130px;
+  }
 }
 
 /* ============================================
@@ -553,6 +629,7 @@
   gap: 4px;
   align-items: center;
 }
+
 .film-frame {
   width: 28px;
   height: 44px;
@@ -573,6 +650,7 @@
   justify-content: center;
   flex-shrink: 0;
 }
+
 .play-icon {
   font-size: 1.2rem;
   color: #00f5d4;
@@ -586,6 +664,7 @@
   align-items: center;
   height: 44px;
 }
+
 .wave-bar {
   width: 4px;
   height: 100%;
@@ -621,21 +700,32 @@
   gap: 5px;
   margin-bottom: 10px;
 }
+
 .code-dots span {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
 }
-.code-dots span:nth-child(1) { background: rgba(255, 80, 80, 0.7); }
-.code-dots span:nth-child(2) { background: rgba(255, 170, 0, 0.7); }
-.code-dots span:nth-child(3) { background: rgba(0, 220, 100, 0.7); }
+
+.code-dots span:nth-child(1) {
+  background: rgba(255, 80, 80, 0.7);
+}
+
+.code-dots span:nth-child(2) {
+  background: rgba(255, 170, 0, 0.7);
+}
+
+.code-dots span:nth-child(3) {
+  background: rgba(0, 220, 100, 0.7);
+}
 
 .code-lines {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .code-line {
   height: 6px;
   border-radius: 3px;
@@ -654,10 +744,32 @@
   padding: 4px 8px;
   border-radius: 4px;
 }
-.tech-orb:nth-child(2) { bottom: 18px; right: 24px; }
-.tech-orb:nth-child(3) { bottom: 52px; right: 70px; color: #c084fc; border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.06); }
-.tech-orb:nth-child(4) { top: 16px; right: 28px; }
-.tech-orb:nth-child(5) { top: 50px; right: 76px; color: #facc15; border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.06); }
+
+.tech-orb:nth-child(2) {
+  bottom: 18px;
+  right: 24px;
+}
+
+.tech-orb:nth-child(3) {
+  bottom: 52px;
+  right: 70px;
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.3);
+  background: rgba(192, 132, 252, 0.06);
+}
+
+.tech-orb:nth-child(4) {
+  top: 16px;
+  right: 28px;
+}
+
+.tech-orb:nth-child(5) {
+  top: 50px;
+  right: 76px;
+  color: #facc15;
+  border-color: rgba(250, 204, 21, 0.3);
+  background: rgba(250, 204, 21, 0.06);
+}
 
 /* ── MICRO: DESIGN ─────────────────────────────────── */
 .design-micro {
@@ -676,6 +788,7 @@
   flex-direction: column;
   gap: 6px;
 }
+
 .palette-swatch {
   width: 28px;
   height: 28px;
@@ -692,10 +805,12 @@
   align-items: center;
   justify-content: center;
 }
+
 .orbit-ring {
   position: absolute;
   inset: 0;
 }
+
 .orbit-node {
   position: absolute;
   font-size: 0.7rem;
@@ -711,10 +826,24 @@
   margin-top: -10px;
   margin-left: -10px;
 }
-.orbit-node:nth-child(1) { transform: rotate(calc(var(--i) * 90deg)) translateX(-38px); }
-.orbit-node:nth-child(2) { transform: rotate(calc(var(--i) * 90deg)) translateX(-38px); }
-.orbit-node:nth-child(3) { transform: rotate(calc(var(--i) * 90deg)) translateX(-38px); color: #c084fc; }
-.orbit-node:nth-child(4) { transform: rotate(calc(var(--i) * 90deg)) translateX(-38px); color: #facc15; }
+
+.orbit-node:nth-child(1) {
+  transform: rotate(calc(var(--i) * 90deg)) translateX(-38px);
+}
+
+.orbit-node:nth-child(2) {
+  transform: rotate(calc(var(--i) * 90deg)) translateX(-38px);
+}
+
+.orbit-node:nth-child(3) {
+  transform: rotate(calc(var(--i) * 90deg)) translateX(-38px);
+  color: #c084fc;
+}
+
+.orbit-node:nth-child(4) {
+  transform: rotate(calc(var(--i) * 90deg)) translateX(-38px);
+  color: #facc15;
+}
 
 .orbit-center {
   width: 44px;
@@ -748,10 +877,21 @@
 }
 
 @media (max-width: 768px) {
-  .bento-text-section { padding: 20px 20px 12px; }
-  .bento-visual-section { min-height: 120px; }
-  .film-strip { display: none; }
-  .tech-orb { display: none; }
+  .bento-text-section {
+    padding: 20px 20px 12px;
+  }
+
+  .bento-visual-section {
+    min-height: 120px;
+  }
+
+  .film-strip {
+    display: none;
+  }
+
+  .tech-orb {
+    display: none;
+  }
 }
 
 /* ============================================================
@@ -829,6 +969,7 @@
   width: fit-content;
   transition: all 0.3s ease;
 }
+
 .featured-cta:hover {
   background: rgba(99, 102, 241, 0.15);
   border-color: rgba(99, 102, 241, 0.7);
@@ -861,6 +1002,14 @@
 }
 
 /* Tighten visual zones for compact cards */
-.bento-video .bento-visual-section  { min-height: 200px; }
-.bento-web   .bento-visual-section  { min-height: 130px; }
-.bento-design .bento-visual-section { min-height: 130px; }
+.bento-video .bento-visual-section {
+  min-height: 200px;
+}
+
+.bento-web .bento-visual-section {
+  min-height: 130px;
+}
+
+.bento-design .bento-visual-section {
+  min-height: 130px;
+}
