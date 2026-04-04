@@ -151,6 +151,26 @@ const CardNav = ({
   const desktopLinks = [];
   const desktopLinkMap = new Set();
 
+  const isInternalRoute = href => typeof href === 'string' && href.startsWith('/') && !href.startsWith('//');
+
+  const navigateTo = href => {
+    if (!isInternalRoute(href)) {
+      window.location.assign(href);
+      return;
+    }
+
+    if (window.location.pathname !== href) {
+      window.history.pushState({}, '', href);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
+  };
+
+  const handleInternalNav = (event, href) => {
+    if (!isInternalRoute(href)) return;
+    event.preventDefault();
+    navigateTo(href);
+  };
+
   (items || []).forEach(item => {
     const primaryLink = { label: item.label, href: item.href || item.links?.[0]?.href || '/' };
     if (!desktopLinkMap.has(primaryLink.href)) {
@@ -167,7 +187,7 @@ const CardNav = ({
   });
 
   const handleCtaClick = () => {
-    window.location.assign('/portfolio');
+    navigateTo('/portfolio');
   };
 
   return (
@@ -185,13 +205,23 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <a className="logo-container" href="/" aria-label="Go to home page">
+          <a
+            className="logo-container"
+            href="/"
+            aria-label="Go to home page"
+            onClick={event => handleInternalNav(event, '/')}
+          >
             <img src={logo} alt={logoAlt} className="logo" />
           </a>
 
           <div className="card-nav-desktop-links" aria-label="Main navigation">
             {desktopLinks.map((item, index) => (
-              <a key={`${item.label}-${index}`} href={item.href} className="card-nav-top-link">
+              <a
+                key={`${item.label}-${index}`}
+                href={item.href}
+                className="card-nav-top-link"
+                onClick={event => handleInternalNav(event, item.href)}
+              >
                 {item.label}
               </a>
             ))}
@@ -216,10 +246,16 @@ const CardNav = ({
               <div className="nav-card-label">{item.label}</div>
               <div className="nav-card-links">
                 {item.links?.map((lnk, i) => (
-                  <a key={`${lnk.label}-${i}`} className="nav-card-link" href={lnk.href} aria-label={lnk.ariaLabel}>
-                    <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
-                    {lnk.label}
-                  </a>
+                    <a
+                      key={`${lnk.label}-${i}`}
+                      className="nav-card-link"
+                      href={lnk.href}
+                      aria-label={lnk.ariaLabel}
+                      onClick={event => handleInternalNav(event, lnk.href)}
+                    >
+                      <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
+                      {lnk.label}
+                    </a>
                 ))}
               </div>
             </div>

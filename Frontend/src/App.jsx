@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import AdminLogin from './admin/AdminLogin';
 import AdminForms from './admin/AdminForms';
@@ -26,6 +26,10 @@ const normalizePath = rawPath => {
 };
 
 function App() {
+  const [path, setPath] = useState(
+    normalizePath(typeof window !== 'undefined' ? window.location.pathname : '/')
+  );
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.0,           // slightly snappier = fewer composited frames
@@ -51,7 +55,15 @@ function App() {
     };
   }, []);
 
-  const path = normalizePath(typeof window !== 'undefined' ? window.location.pathname : '/')
+  useEffect(() => {
+    const syncPathWithLocation = () => {
+      setPath(normalizePath(window.location.pathname));
+    };
+
+    window.addEventListener('popstate', syncPathWithLocation);
+    return () => window.removeEventListener('popstate', syncPathWithLocation);
+  }, []);
+
   const caseStudyPrefix = '/case-studies/'
   const isCaseStudyDetail = path.startsWith(caseStudyPrefix)
   const caseStudySlug = isCaseStudyDetail ? path.slice(caseStudyPrefix.length) : ''
