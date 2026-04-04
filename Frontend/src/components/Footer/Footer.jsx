@@ -54,7 +54,7 @@ const Footer = () => {
         >
           <span className="section-label-cyber footer-cta-label">// READY TO TRANSMIT?</span>
           <h2 className="footer-cta-text">
-            LET'S MAKE<br /><span className="text-kinetic">SOMETHING.</span>
+            LET'S MAKE<br /><span className="text-shimmer">SOMETHING.</span>
           </h2>
           <motion.a
             href="#contact"

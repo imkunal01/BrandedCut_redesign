@@ -13,9 +13,27 @@ const CardNav = ({
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.matchMedia('(min-width: 769px)').matches : false
+  );
   const navRef = useRef(null);
   const cardsRef = useRef([]);
   const tlRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 769px)');
+    const updateDesktop = event => {
+      setIsDesktop(event.matches);
+      if (event.matches) {
+        setIsExpanded(false);
+        setIsHamburgerOpen(false);
+      }
+    };
+
+    updateDesktop(mediaQuery);
+    mediaQuery.addEventListener('change', updateDesktop);
+    return () => mediaQuery.removeEventListener('change', updateDesktop);
+  }, []);
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -112,6 +130,7 @@ const CardNav = ({
   }, [isExpanded]);
 
   const toggleMenu = () => {
+    if (isDesktop) return;
     const tl = tlRef.current;
     if (!tl) return;
     if (!isExpanded) {
@@ -129,6 +148,28 @@ const CardNav = ({
     if (el) cardsRef.current[i] = el;
   };
 
+  const desktopLinks = [];
+  const desktopLinkMap = new Set();
+
+  (items || []).forEach(item => {
+    const primaryLink = { label: item.label, href: item.href || item.links?.[0]?.href || '/' };
+    if (!desktopLinkMap.has(primaryLink.href)) {
+      desktopLinkMap.add(primaryLink.href);
+      desktopLinks.push(primaryLink);
+    }
+
+    (item.links || []).forEach(link => {
+      if (!desktopLinkMap.has(link.href)) {
+        desktopLinkMap.add(link.href);
+        desktopLinks.push({ label: link.label, href: link.href });
+      }
+    });
+  });
+
+  const handleCtaClick = () => {
+    window.location.assign('/portfolio');
+  };
+
   return (
     <div className={`card-nav-container ${className}`}>
       <nav ref={navRef} className={`card-nav glassmorphic ${isExpanded ? 'open' : ''}`}>
@@ -144,20 +185,29 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <div className="logo-container">
+          <a className="logo-container" href="/" aria-label="Go to home page">
             <img src={logo} alt={logoAlt} className="logo" />
+          </a>
+
+          <div className="card-nav-desktop-links" aria-label="Main navigation">
+            {desktopLinks.map((item, index) => (
+              <a key={`${item.label}-${index}`} href={item.href} className="card-nav-top-link">
+                {item.label}
+              </a>
+            ))}
           </div>
 
           <button
             type="button"
             className="card-nav-cta-button neumorphic-button"
+            onClick={handleCtaClick}
           >
             Get Started
           </button>
         </div>
 
-        <div className="card-nav-content" aria-hidden={!isExpanded}>
-          {(items || []).slice(0, 3).map((item, idx) => (
+        <div className="card-nav-content" aria-hidden={!isExpanded && !isDesktop}>
+          {(items || []).map((item, idx) => (
             <div
               key={`${item.label}-${idx}`}
               className="nav-card glassmorphic-card"

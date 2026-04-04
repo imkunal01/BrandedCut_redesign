@@ -4,7 +4,7 @@
 .contact-section {
   position: relative;
   background: var(--midnight);
-  padding: 140px 0;
+  padding: clamp(80px, 10vw, 160px) 0;
   overflow: hidden;
 }
 
@@ -25,7 +25,7 @@
   z-index: 2;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 clamp(20px, 4vw, 60px);
 }
 
 /* Header */
@@ -308,14 +308,6 @@
 }
 
 @media (max-width: 768px) {
-  .contact-section {
-    padding: 100px 0;
-  }
-
-  .contact-container {
-    padding: 0 20px;
-  }
-
   .form-row {
     grid-template-columns: 1fr;
   }

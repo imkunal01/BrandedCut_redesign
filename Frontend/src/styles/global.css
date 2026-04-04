@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
 @import './variables.css';
 
 * {
@@ -74,7 +76,7 @@ body::after {
 
 body {
   font-family: var(--font-family);
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   color: var(--text);
   line-height: var(--line-height-normal);
   overflow-x: hidden;
@@ -90,9 +92,9 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(0, 245, 212, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
   background-size: 600px 600px, 400px 400px, 300px 300px;
   animation: backgroundFloat 30s ease-in-out infinite;
   z-index: -1;
@@ -110,22 +112,17 @@ body::before {
   }
 }
 
-/* Custom Scrollbar */
+/* Hide scrollbar globally while keeping scroll behavior */
+html,
+body,
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: var(--radius-full);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-glow);
+  width: 0;
+  height: 0;
 }
 
 /* Selection */
@@ -150,7 +147,7 @@ body::before {
 }
 
 .glass-dark {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: var(--glass-backdrop);
   -webkit-backdrop-filter: var(--glass-backdrop);
   border: 1px solid var(--border);
@@ -278,7 +275,177 @@ body::before {
   }
 }
 
-/* Responsive Design */
+
+/* Theme Transition */
+.theme-transition {
+  transition: all var(--transition-slow);
+}
+
+/* Cursor Glow Effect */
+.cursor-glow {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: all 0.1s ease;
+}
+
+/* ===================================
+   REACTBITS-INSPIRED ANIMATIONS
+   =================================== */
+
+/* 1. Shimmer gradient text sweep */
+@keyframes shimmer-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--white) 0%,
+    var(--electric) 30%,
+    var(--violet) 50%,
+    var(--white) 70%,
+    var(--electric) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-sweep 4s linear infinite;
+}
+
+/* 2. Blur-reveal text */
+@keyframes blur-reveal {
+  0% { filter: blur(12px); opacity: 0; transform: translateY(20px); }
+  100% { filter: blur(0); opacity: 1; transform: translateY(0); }
+}
+
+.blur-reveal {
+  animation: blur-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 3. Reveal up (for JS-triggered on-scroll) */
+@keyframes reveal-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-up {
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 4. Border beam animation */
+@keyframes border-beam {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.border-beam-card {
+  position: relative;
+}
+
+.border-beam-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--electric), var(--violet), var(--electric));
+  background-size: 200% 200%;
+  animation: border-beam 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.border-beam-card:hover::before {
+  opacity: 1;
+}
+
+/* 5. Floating particle dots */
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+  33% { transform: translateY(-18px) rotate(60deg); opacity: 0.8; }
+  66% { transform: translateY(-8px) rotate(120deg); opacity: 0.5; }
+}
+
+/* 6. Magnetic button glow pulse */
+@keyframes magnetic-glow {
+  0%, 100% { box-shadow: 0 0 0px rgba(0, 245, 212, 0); }
+  50% { box-shadow: 0 0 30px rgba(0, 245, 212, 0.4), 0 0 60px rgba(0, 245, 212, 0.2); }
+}
+
+.magnetic-btn:hover {
+  animation: magnetic-glow 1.5s ease-in-out infinite;
+}
+
+/* 7. Counter animate (used on about stats) */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.counter-animate {
+  animation: count-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 8. Stagger enter helper classes */
+.stagger-item { opacity: 0; }
+.stagger-item.is-visible { animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Stagger delays */
+.stagger-delay-1 { animation-delay: 0.05s; }
+.stagger-delay-2 { animation-delay: 0.1s; }
+.stagger-delay-3 { animation-delay: 0.15s; }
+.stagger-delay-4 { animation-delay: 0.2s; }
+
+/* 9. Glitch flash */
+@keyframes glitch-flash {
+  0%, 100% { clip-path: none; transform: none; }
+  20% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translate(-3px); }
+  40% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(3px); }
+  60% { clip-path: none; transform: none; }
+}
+
+/* ===================================
+   SECTION ALTERNATION BACKGROUNDS
+   =================================== */
+.section-dark { background: var(--midnight); }
+.section-subtle { background: var(--surface); }
+.section-deep { background: var(--deep); }
+
+/* ===================================
+   RESPONSIVE CONTAINER UTILITIES
+   =================================== */
+.container-fluid {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+
+/* Consistent section vertical rhythm */
+.cyber-section {
+  padding: clamp(80px, 10vw, 160px) 0;
+}
+
+.cyber-section--sm {
+  padding: clamp(60px, 7vw, 100px) 0;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN UPDATES
+   =================================== */
 @media (max-width: 768px) {
   :root {
     --font-size-5xl: 2.5rem;
@@ -302,17 +469,4 @@ body::before {
 /* Theme Transition */
 .theme-transition {
   transition: all var(--transition-slow);
-}
-
-/* Cursor Glow Effect */
-.cursor-glow {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: screen;
-  transition: all 0.1s ease;
 }

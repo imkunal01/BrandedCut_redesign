@@ -3,15 +3,15 @@
    ============================== */
 .team-section {
   position: relative;
-  background: var(--deep);
-  padding: 140px 0;
+  background: var(--surface);
+  padding: clamp(80px, 10vw, 160px) 0;
   overflow: hidden;
 }
 
 .team-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 clamp(20px, 4vw, 60px);
 }
 
 .team-header { margin-bottom: 80px; }
@@ -165,8 +165,11 @@
 }
 
 @media (max-width: 768px) {
-  .team-section { padding: 100px 0; }
-  .team-container { padding: 0 20px; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .team-card { padding: 24px 20px; }
+}
+
+@media (max-width: 480px) {
   .team-grid { grid-template-columns: 1fr; }
-  .team-card { padding: 28px 24px; }
+  .team-card { padding: 24px; }
 }

@@ -6,6 +6,8 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import CardNav from './components/CardNav';
 import logo from './assets/logo4.png';
 import HeroSection from './components/HeroSection';
+import PhoneShowcaseSection from './components/PhoneShowcaseSection';
+import CaseStudiesSection from './components/CaseStudiesSection/CaseStudiesSection';
 import ServicesSection from './components/ServicesSection';
 import PortfolioSection from './components/PortfolioSection';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -13,8 +15,15 @@ import ProcessSection from './components/ProcessSection';
 import AboutSection from './components/AboutSection';
 import TeamSection from './components/TeamSection';
 import ContactSection from './components/ContactSection';
+import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import Footer from './components/Footer';
 import './styles/global.css';
+
+const normalizePath = rawPath => {
+  if (!rawPath) return '/';
+  const trimmed = rawPath.replace(/\/+$/, '');
+  return trimmed === '' ? '/' : trimmed;
+};
 
 function App() {
   useEffect(() => {
@@ -42,7 +51,10 @@ function App() {
     };
   }, []);
 
-  const path = typeof window !== 'undefined' ? window.location.pathname : '/'
+  const path = normalizePath(typeof window !== 'undefined' ? window.location.pathname : '/')
+  const caseStudyPrefix = '/case-studies/'
+  const isCaseStudyDetail = path.startsWith(caseStudyPrefix)
+  const caseStudySlug = isCaseStudyDetail ? path.slice(caseStudyPrefix.length) : ''
   const isAdmin = path.startsWith('/admin')
   if (isAdmin) {
     if (path === '/admin' || path === '/admin/') {
@@ -53,35 +65,80 @@ function App() {
     }
     return <AdminLogin />
   }
+
+  const routeContent = () => {
+    if (isCaseStudyDetail) {
+      return <CaseStudyDetailPage slug={caseStudySlug} />
+    }
+
+    switch (path) {
+      case '/':
+        return (
+          <>
+            <HeroSection />
+            <PhoneShowcaseSection />
+            <CaseStudiesSection />
+          </>
+        );
+      case '/case-studies':
+        return <CaseStudiesSection />;
+      case '/services':
+        return <ServicesSection />;
+      case '/portfolio':
+        return <PortfolioSection />;
+      case '/about':
+        return <AboutSection />;
+      case '/process':
+        return <ProcessSection />;
+      case '/testimonials':
+        return <TestimonialsSection />;
+      case '/team':
+        return <TeamSection />;
+      case '/contact':
+        return <ContactSection />;
+      default:
+        return (
+          <>
+            <HeroSection />
+            <PhoneShowcaseSection />
+            <CaseStudiesSection />
+          </>
+        );
+    }
+  };
+
   const items = [
     {
-      label: "About",
-      bgColor: "#0D0716",
-      textColor: "#fff",
+      label: 'Services',
+      href: '/services',
       links: [
-        { label: "Company", ariaLabel: "About Company", href: "#about" },
-        { label: "Careers", ariaLabel: "About Careers", href: "#careers" }
-      ]
+        { label: 'All Services', ariaLabel: 'View all services', href: '/services' },
+        { label: 'Process', ariaLabel: 'View our process', href: '/process' },
+      ],
     },
     {
-      label: "Projects", 
-      bgColor: "#170D27",
-      textColor: "#fff",
+      label: 'Work',
+      href: '/portfolio',
       links: [
-        { label: "Featured", ariaLabel: "Featured Projects", href: "#portfolio" },
-        { label: "Case Studies", ariaLabel: "Project Case Studies", href: "#case-studies" }
-      ]
+        { label: 'Work Portfolio', ariaLabel: 'View work portfolio', href: '/portfolio' },
+        { label: 'Testimonials', ariaLabel: 'Read testimonials', href: '/testimonials' },
+      ],
     },
     {
-      label: "Contact",
-      bgColor: "#271E37", 
-      textColor: "#fff",
+      label: 'About',
+      href: '/about',
       links: [
-        { label: "Email", ariaLabel: "Email us", href: "#contact" },
-        { label: "Twitter", ariaLabel: "Twitter", href: "#twitter" },
-        { label: "LinkedIn", ariaLabel: "LinkedIn", href: "#linkedin" }
-      ]
-    }
+        { label: 'About Us', ariaLabel: 'Learn about BrandedCut', href: '/about' },
+        { label: 'Team', ariaLabel: 'Meet the team', href: '/team' },
+      ],
+    },
+    {
+      label: 'Contact',
+      href: '/contact',
+      links: [
+        { label: 'Get in Touch', ariaLabel: 'Contact BrandedCut', href: '/contact' },
+      ],
+    },
   ];
 
   return (
@@ -94,13 +151,7 @@ function App() {
           ease="power3.out"
         />
         <main>
-          <HeroSection />
-          <PortfolioSection />
-          <AboutSection />
-          <ProcessSection />
-          <TestimonialsSection />
-          <TeamSection />
-          <ContactSection />
+          {routeContent()}
         </main>
         <Footer />
       </div>

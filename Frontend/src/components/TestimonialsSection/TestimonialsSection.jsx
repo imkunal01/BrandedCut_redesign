@@ -55,7 +55,7 @@ const TestimonialsSection = () => {
         >
           <span className="section-label-cyber">// CLIENT LOG</span>
           <h2 className="testimonials-title">
-            SIGNAL FROM THE <span className="text-kinetic">FIELD.</span>
+            SIGNAL FROM THE <span className="text-shimmer">FIELD.</span>
           </h2>
         </motion.div>
 

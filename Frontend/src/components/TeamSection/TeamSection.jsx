@@ -54,7 +54,7 @@ const TeamSection = () => {
         >
           <span className="section-label-cyber">// THE CREW</span>
           <h2 className="team-title">
-            MEET THE <span className="text-kinetic">UNIT.</span>
+            MEET THE <span className="text-shimmer">UNIT.</span>
           </h2>
           <p className="team-subtitle">The creative engineers and digital architects behind BrandedCut.</p>
         </motion.div>

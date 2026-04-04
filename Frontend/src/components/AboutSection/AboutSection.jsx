@@ -1,20 +1,51 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import './AboutSection.css';
 
 const values = [
-  { title: 'INNOVATION', description: 'We constantly push boundaries and explore new technologies to deliver cutting-edge solutions.', icon: '🚀', accent: 'var(--electric)' },
-  { title: 'QUALITY', description: 'Every project is crafted with meticulous attention to detail. No corners cut, ever.', icon: '✦', accent: 'rgba(192,132,252,1)' },
-  { title: 'COLLABORATION', description: 'We work as an extension of your team — your vision becomes our relentless mission.', icon: '◈', accent: 'var(--electric)' },
-  { title: 'EXCELLENCE', description: 'We strive for excellence in everything: from initial concept to the final deployment.', icon: '◉', accent: 'rgba(192,132,252,1)' }
+  { title: 'INNOVATION', description: 'We constantly push boundaries and explore new technologies to deliver cutting-edge solutions.', icon: '🚀', accent: 'var(--electric)', accentRgb: '0, 245, 212' },
+  { title: 'QUALITY', description: 'Every project is crafted with meticulous attention to detail. No corners cut, ever.', icon: '✦', accent: 'rgba(192,132,252,1)', accentRgb: '192, 132, 252' },
+  { title: 'COLLABORATION', description: 'We work as an extension of your team — your vision becomes our relentless mission.', icon: '◈', accent: 'var(--electric)', accentRgb: '0, 245, 212' },
+  { title: 'EXCELLENCE', description: 'We strive for excellence in everything: from initial concept to the final deployment.', icon: '◉', accent: 'rgba(192,132,252,1)', accentRgb: '192, 132, 252' }
 ];
 
 const stats = [
-  { number: '50+', label: 'Projects Delivered' },
-  { number: '30+', label: 'Happy Clients' },
-  { number: '4', label: 'Years on the Grid' },
-  { number: '100%', label: 'Client Satisfaction' },
+  { number: 50, suffix: '+', label: 'Projects Delivered', accent: 'var(--electric)' },
+  { number: 30, suffix: '+', label: 'Happy Clients', accent: 'rgba(192,132,252,1)' },
+  { number: 4, suffix: 'yrs', label: 'Years on the Grid', accent: 'var(--gold)' },
+  { number: 100, suffix: '%', label: 'Client Satisfaction', accent: 'var(--electric)' },
 ];
+
+// Animated counter component
+const AnimatedCounter = ({ target, suffix, accent }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-10%' });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const duration = 1600;
+    const step = 16;
+    const increment = target / (duration / step);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, step);
+    return () => clearInterval(timer);
+  }, [isInView, target]);
+
+  return (
+    <span ref={ref} className="stat-number" style={{ color: accent }}>
+      {count}{suffix}
+    </span>
+  );
+};
 
 const AboutSection = () => {
   const sectionRef = useRef(null);
@@ -33,6 +64,9 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="about-section" ref={sectionRef}>
+      {/* Background orb */}
+      <div className="about-bg-orb" aria-hidden="true" />
+
       <div className="about-container">
 
         {/* --- HEADER --- */}
@@ -44,7 +78,7 @@ const AboutSection = () => {
         >
           <span className="section-label-cyber">// THE COLLECTIVE</span>
           <h2 className="about-title">
-            WHO WE <span className="text-kinetic">ARE.</span>
+            WHO WE <span className="text-shimmer">ARE.</span>
           </h2>
         </motion.div>
 
@@ -101,8 +135,8 @@ const AboutSection = () => {
           </motion.div>
         </div>
 
-        {/* --- STATS BAR --- */}
-        <motion.div className="about-stats-bar"
+        {/* --- STATS BENTO GRID --- */}
+        <motion.div className="about-stats-bento"
           variants={stagger}
           initial="hidden"
           whileInView="visible"
@@ -110,9 +144,13 @@ const AboutSection = () => {
           style={{ y: statsY }}
         >
           {stats.map((s, i) => (
-            <motion.div key={i} className="stat-item" variants={riseItem}>
-              <div className="stat-number">{s.number}</div>
+            <motion.div key={i} className="about-stat-card" variants={riseItem}
+              whileHover={{ borderColor: s.accent, y: -4, transition: { duration: 0.3 } }}
+              style={{ '--stat-accent-rgb': s.accent }}
+            >
+              <AnimatedCounter target={s.number} suffix={s.suffix} accent={s.accent} />
               <div className="stat-label">{s.label}</div>
+              <div className="stat-card-glow" style={{ background: `radial-gradient(circle, ${s.accent} 0%, transparent 70%)` }} />
             </motion.div>
           ))}
         </motion.div>
@@ -134,8 +172,9 @@ const AboutSection = () => {
           viewport={{ once: true, margin: '-5%' }}
         >
           {values.map((v, i) => (
-            <motion.div key={i} className="value-card" variants={riseItem}
+            <motion.div key={i} className="value-card border-beam-card" variants={riseItem}
               whileHover={{ borderColor: v.accent, transition: { duration: 0.3 } }}
+              style={{ '--accent-rgb': v.accentRgb }}
             >
               <div className="value-icon" style={{ color: v.accent }}>{v.icon}</div>
               <h4 className="value-title">{v.title}</h4>

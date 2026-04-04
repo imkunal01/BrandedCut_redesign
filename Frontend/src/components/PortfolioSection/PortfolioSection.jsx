@@ -3,6 +3,26 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import GradualBlur from '../GradualBlur';
 import './PortfolioSection.css';
 
+const createMockupImage = (title, colorA, colorB) => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${colorA}"/>
+        <stop offset="100%" stop-color="${colorB}"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="1000" fill="url(#bg)"/>
+    <rect x="110" y="110" width="1380" height="780" rx="28" fill="#ffffff" fill-opacity="0.92"/>
+    <rect x="150" y="170" width="420" height="40" rx="10" fill="#dbeafe"/>
+    <rect x="150" y="232" width="560" height="28" rx="8" fill="#e2e8f0"/>
+    <rect x="150" y="282" width="500" height="28" rx="8" fill="#e2e8f0"/>
+    <rect x="150" y="360" width="1280" height="460" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="150" y="110" fill="#0f172a" font-family="Arial, sans-serif" font-size="44" font-weight="700">${title}</text>
+  </svg>`;
+
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+};
+
 // --- Project Data (PRESERVED) ---
 const projects = [
   {
@@ -20,7 +40,7 @@ const projects = [
     id: 2,
     title: 'TechFlow Dashboard',
     category: 'web',
-    image: '/api/placeholder/800/600?text=TechFlow+Dashboard',
+    image: createMockupImage('TechFlow Dashboard', '#dcfce7', '#dbeafe'),
     description: 'Modern admin dashboard with real-time analytics engine',
     tags: ['React', 'Dashboard', 'Analytics'],
     year: '2026',
@@ -40,7 +60,7 @@ const projects = [
     id: 4,
     title: 'Mc Donalds E-commerce',
     category: 'web',
-    image: '/api/placeholder/800/600?text=McDonalds+E-Commerce',
+    image: createMockupImage('McDonalds E-commerce', '#fee2e2', '#ffedd5'),
     description: 'E-commerce website for a fast-food brand concept',
     tags: ['E-commerce', 'Responsive', 'Next.js'],
     year: '2025',
@@ -236,7 +256,7 @@ const PortfolioSection = () => {
   };
 
   return (
-    <section id="portfolio" className="portfolio-section" style={{ background: '#050508' }}>
+    <section id="portfolio" className="portfolio-section">
       <div className="portfolio-section__container">
         <motion.div
           className="portfolio-section__header"

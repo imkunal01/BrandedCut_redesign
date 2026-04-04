@@ -67,7 +67,7 @@ const ContactSection = () => {
         >
           <span className="section-label-cyber">// INITIATE</span>
           <h2 className="contact-heading">
-            BUILD THE <span className="text-kinetic">FUTURE.</span>
+            BUILD THE <span className="text-shimmer">FUTURE.</span>
           </h2>
         </motion.div>
 
