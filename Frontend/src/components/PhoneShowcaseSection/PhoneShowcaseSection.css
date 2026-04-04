@@ -306,18 +306,32 @@
 
 @media (max-width: 760px) {
   .phone-showcase__carousel-shell {
-    padding-left: 36px;
-    padding-right: 36px;
+    padding-left: 22px;
+    padding-right: 22px;
     border-radius: 22px;
   }
 
+  .phone-showcase__viewport {
+    padding: 0;
+  }
+
+  .phone-showcase__track {
+    gap: 14px;
+  }
+
   .phone-slide {
-    flex-basis: clamp(154px, 34vw, 196px);
+    flex-basis: clamp(210px, 62vw, 242px);
+  }
+
+  .phone-frame {
+    width: min(100%, 232px);
+    height: clamp(432px, 118vw, 520px);
+    border-radius: 34px;
   }
 
   .phone-showcase__arrow {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
   }
 }
 
@@ -327,21 +341,26 @@
   }
 
   .phone-showcase__carousel-shell {
-    padding-left: 28px;
-    padding-right: 28px;
+    padding-left: 16px;
+    padding-right: 16px;
     padding-bottom: 118px;
   }
 
   .phone-slide {
-    flex-basis: clamp(170px, 68vw, 230px);
+    flex-basis: clamp(202px, 66vw, 226px);
+  }
+
+  .phone-frame {
+    width: min(100%, 218px);
+    height: clamp(416px, 124vw, 500px);
   }
 
   .phone-showcase__arrow--left {
-    left: 8px;
+    left: 4px;
   }
 
   .phone-showcase__arrow--right {
-    right: 8px;
+    right: 4px;
   }
 
   .phone-showcase__bento {
