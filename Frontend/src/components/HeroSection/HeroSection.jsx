@@ -41,9 +41,9 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55 }}
         >
-          Where your <span>data</span> turns
+          We Make <span>Names </span> turns
           <br />
-          into <span>software</span> with a click
+          into <span>Brands</span> with a click
         </motion.h1>
 
         <motion.p
@@ -52,8 +52,8 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.12 }}
         >
-          Build custom portals, CRMs, and tools effortlessly. From
-          concept to launch in minutes, not months.
+          Build custom Videos, Websites, and Designs  effortlessly. From
+          concept to reality.
         </motion.p>
 
         <motion.button
